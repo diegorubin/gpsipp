@@ -9,8 +9,11 @@
     :license: BSD, see LICENSE for more details.
 """
 import os
-from flask import Flask, send_from_directory
 
+import random
+from flask import Flask, render_template, send_from_directory
+
+ASSET = random.random()
 STATIC_FOLDER = 'public'
 app = Flask(__name__, static_folder=STATIC_FOLDER)
 
@@ -26,7 +29,7 @@ app.register_blueprint(users_controller.mod)
 
 @app.route('/')
 def root():
-    return app.send_static_file('index.html')
+    return render_template('index.html', asset=ASSET)
 
 @app.route('/js/<path:path>')
 def send_js(path):
