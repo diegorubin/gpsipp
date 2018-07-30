@@ -11,6 +11,7 @@
 import os
 
 import random
+from database import db_session
 from flask import Flask, render_template, send_from_directory
 
 ASSET = random.random()
@@ -46,6 +47,10 @@ def send_images(path):
 @app.route('/partials/<path:path>')
 def send_partials(path):
     return send_from_directory(STATIC_FOLDER + '/partials', path)
+
+@app.teardown_appcontext
+def shutdown_session(expection=None):
+    db_session.remove()
 
 if __name__ == '__main__':
     app.run()
