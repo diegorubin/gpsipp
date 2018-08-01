@@ -3,7 +3,13 @@ from users.domains.user import User
 from users.usecases.exceptions import *
 
 def list_users():
-    return User.query.all()
+    users = []
+    for u in User.query.all():
+        attributes = u.__dict__
+        del attributes['_sa_instance_state']
+        del attributes['password']
+        users.append(attributes)
+    return users
 
 def create_user(attributes):
     if attributes is None:

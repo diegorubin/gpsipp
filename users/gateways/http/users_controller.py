@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, Response, jsonify, request
+from flask import Blueprint, Response, request
 from users.usecases import crud
 from users.usecases.exceptions import ContractError, ValidationError
 
@@ -11,12 +11,9 @@ def users_empty():
     result = json.dumps({'empty': len(crud.list_users()) == 0})
     return Response(result, mimetype='application/json')
 
-@mod.route('/users', methods=['GET', 'POST'])
+@mod.route('/users', methods=['POST'])
 def users():
-    if request.method == 'POST':
-        return create_user()
-    else:
-        return get_users()
+    return create_user()
 
 def create_user():
     try:
@@ -34,8 +31,4 @@ def create_user():
             'errors': e.errors
         }
         return Response(json.dumps(result), mimetype='application/json', status=400)
-
-def get_users():
-    result = json.dumps(crud.list_users())
-    return Response(result, mimetype='application/json')
 

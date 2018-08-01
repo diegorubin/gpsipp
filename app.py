@@ -25,11 +25,13 @@ app.config.update(dict(
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-from users.gateways.http import users_controller
+from users.gateways.http import users_controller, secure_users_controller
 from users.usecases.login import authenticate, identity
 
-app.register_blueprint(users_controller.mod)
 jwt = JWT(app, authenticate, identity)
+
+app.register_blueprint(users_controller.mod)
+app.register_blueprint(secure_users_controller.mod, url_prefix='/secure')
 
 @app.route('/')
 def root():
