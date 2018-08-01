@@ -13,6 +13,7 @@ import os
 import random
 from database import db_session
 from flask import Flask, render_template, send_from_directory
+from flask_jwt import JWT
 
 ASSET = random.random()
 STATIC_FOLDER = 'public'
@@ -25,8 +26,10 @@ app.config.update(dict(
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 from users.gateways.http import users_controller
+from users.usecases.login import authenticate, identity
 
 app.register_blueprint(users_controller.mod)
+jwt = JWT(app, authenticate, identity)
 
 @app.route('/')
 def root():
