@@ -28,10 +28,15 @@ Application.prototype.init = function() {
       function() {
         _this.render('users/form', function() {
           var user = new User();
-          user.init();
+          user.init(_this);
         });
       }
     );
+  } else {
+    _this.render('dashboard', function() {
+      var dashboard = new Dashboard();
+      dashboard.init(_this);
+    });
   }
 };
 
@@ -48,7 +53,7 @@ Application.prototype.render = function(partial, onDone) {
 };
 
 Application.prototype.isLogged = function() {
-  return false;
+  return localStorage.getItem("access_token");
 };
 
 var application = new Application();
