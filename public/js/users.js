@@ -27,6 +27,7 @@ User.prototype.initForm = function() {
 };
 
 User.prototype.loadUsers = function() {
+  var _this = this;
   $.ajax({
     method: 'get', 
     url: '/secure/users',
@@ -35,11 +36,16 @@ User.prototype.loadUsers = function() {
     headers: {
       'Authorization': 'JWT ' + localStorage.getItem('access_token')
     }
-  }).done(function(users){
-    _this.application.render('users/list', function(users) {
-    });
+  }).done(function(users) {
+    _this.application.render('users/list', undefined, {
+        data: { users: users },
+        destination: '#mainContent'
+      });
   }).fail(function(data){
-    _this.renderError(data.error);
+    console.log(data);
+    if (data.status == 401) {
+      _this.application.clearSession();
+    }
   });
 };
 

@@ -12,25 +12,40 @@ Dashboard.prototype.init = function(application) {
 };
 
 Dashboard.prototype.initBtnSignOut = function() {
+  var _this = this;
+
   $("#btnSignOut").click(function(event) {
     event.preventDefault();
-
-    localStorage.removeItem("access_token");
-    window.location.reload();
-
+    _this.application.clearSession();
     return false;
   });
 };
 
 Dashboard.prototype.initMenu = function() {
   var _this = this;
-  $('#userMenuItem').click(function(event) {
+
+  $('#groupsMenuItem').click(function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var group = new Group();
+    user.init(_this.application);
+  });
+
+  $('#membersMenuItem').click(function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var member = new Member();
+    user.init(_this.application);
+  });
+
+  $('#usersMenuItem').click(function(event) {
     event.stopPropagation();
     event.preventDefault();
 
     var user = new User();
-    user.init(_this);
-    
+    user.init(_this.application);
   });
 };
 

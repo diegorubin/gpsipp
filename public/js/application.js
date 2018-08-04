@@ -40,12 +40,15 @@ Application.prototype.init = function() {
   }
 };
 
-Application.prototype.render = function(partial, onDone) {
+Application.prototype.render = function(partial, onDone, options) {
+  options = options || {};
   $.ajax({
     method: 'get', 
     url: '/partials/' + partial + '.html?_=' + new Date().getTime()
   }).done(function(data){
-    $('body').html(data);
+    var template = doT.template(data);
+    destination = options.destination || 'body';
+    $(destination).html(template(options.data || {}));
     if (onDone) {
       onDone();
     }
@@ -54,6 +57,11 @@ Application.prototype.render = function(partial, onDone) {
 
 Application.prototype.isLogged = function() {
   return localStorage.getItem("access_token");
+};
+
+Application.prototype.clearSession = function() {
+  localStorage.removeItem("access_token");
+  window.location.reload();
 };
 
 var application = new Application();
