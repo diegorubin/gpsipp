@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">Grupos</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="#" id="newGroup" class="btn btn-primary">Novo Grupo</a>
+  </div>
+</div>
+
+<table id="groups" class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Dia da Semana</th>
+      <th>Endereço</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{~ it.groups :group}}
+      <tr>
+        <td><a href="#" class="groupLink" data-id="{{= group.id}}">{{= group.name }}</a></td>
+        <td>{{= group.day_of_week }}</td>
+        <td>{{= group.address }}</td>
+      </tr>
+    {{~}}
+  </tbody>
+</table>
+

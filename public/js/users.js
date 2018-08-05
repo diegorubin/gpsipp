@@ -13,6 +13,7 @@ User.prototype.init = function(application) {
 };
 
 User.prototype.initForm = function() {
+  var _this = this;
   $('.form-user').submit(function(event) {
     var user = {
       name: document.getElementById('inputName').value,
@@ -58,7 +59,7 @@ User.prototype.save = function(user) {
     dataType: 'json',
     contentType: 'application/json'
   }).done(function(){
-    window.reload();
+    window.location.reload();
   }).fail(function(data){
     _this.renderError(data.error);
   });

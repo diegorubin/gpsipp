@@ -29,7 +29,7 @@ Dashboard.prototype.initMenu = function() {
     event.preventDefault();
 
     var group = new Group();
-    user.init(_this.application);
+    group.init(_this.application);
   });
 
   $('#membersMenuItem').click(function(event) {
@@ -37,7 +37,7 @@ Dashboard.prototype.initMenu = function() {
     event.preventDefault();
 
     var member = new Member();
-    user.init(_this.application);
+    member.init(_this.application);
   });
 
   $('#usersMenuItem').click(function(event) {

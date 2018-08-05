@@ -11,4 +11,8 @@ Base.query = db_session.query_property()
 
 def init_db():
     import users.domains.user
+    import groups.domains.group
+    import groups.domains.member
+    import groups.domains.meeting
+    import groups.domains.presence
     Base.metadata.create_all(bind=engine)
