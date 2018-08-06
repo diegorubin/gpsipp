@@ -1,0 +1,20 @@
+<h3>Encontros</h3>
+
+<table id="encontros" class="table">
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Número de Participantes</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{~ it.meetings :meeting}}
+      <tr>
+        <td>{{= meeting.date}}</td>
+        <td>{{= meeting.number_of_participants}}</td>
+      </tr>
+    {{~}}
+  </tbody>
+</table>
+

@@ -1,11 +1,15 @@
 var Group = function() {
 };
 
-Group.prototype.init = function(application) {
+Group.prototype.init = function(application, groupId) {
   var _this = this;
   _this.application = application;
 
-  _this.loadGroups();
+  if (groupId) {
+    _this.showGroup(groupId);
+  } else {
+    _this.loadGroups();
+  }
 
 };
 
@@ -25,28 +29,58 @@ Group.prototype.initButtons = function() {
     event.stopPropagation();
 
     var id = event.target.getAttribute('data-id');
+    _this.showGroup(id);
 
-    $.ajax({
-      method: 'get', 
-      url: '/secure/groups/' + id,
-      dataType: 'json',
-      contentType: 'application/json',
-      headers: {
-        'Authorization': 'JWT ' + localStorage.getItem('access_token')
-      }
-    }).done(function(group) {
-      console.log(group);
-      _this.application.render('groups/show', function() {
-      }, {
-          data: { group: group },
-          destination: '#mainContent'
-        });
-    }).fail(function(data){
-      console.log(data);
-      if (data.status == 401) {
-        _this.application.clearSession();
-      }
-    });
+  });
+};
+
+Group.prototype.showGroup = function(groupId) {
+  var _this = this;
+  $.ajax({
+    method: 'get', 
+    url: '/secure/groups/' + groupId,
+    dataType: 'json',
+    contentType: 'application/json',
+    headers: {
+      'Authorization': 'JWT ' + localStorage.getItem('access_token')
+    }
+  }).done(function(group) {
+    _this.application.render('groups/show', function() {
+      _this.listMeetings(groupId);
+    }, {
+        data: { group: group },
+        destination: '#mainContent'
+      });
+  }).fail(function(data){
+    console.log(data);
+    if (data.status == 401) {
+      _this.application.clearSession();
+    }
+  });
+};
+
+Group.prototype.listMeetings = function(groupId) {
+  var _this = this;
+  $.ajax({
+    method: 'get', 
+    url: '/secure/meetings?group_id=' + groupId,
+    dataType: 'json',
+    contentType: 'application/json',
+    headers: {
+      'Authorization': 'JWT ' + localStorage.getItem('access_token')
+    }
+  }).done(function(meetings) {
+    _this.application.render('meetings/list', function() {
+      _this.initButtons();
+    }, {
+        data: { meetings: meetings },
+        destination: '#meetings'
+      });
+  }).fail(function(data){
+    console.log(data);
+    if (data.status == 401) {
+      _this.application.clearSession();
+    }
   });
 };
 

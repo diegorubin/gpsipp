@@ -1,4 +1,5 @@
 from database import db_session
+from datetime import datetime
 from groups.domains.group import Group
 from groups.domains.member import Member
 from groups.domains.meeting import Meeting
@@ -37,6 +38,23 @@ def create_member(attributes):
     m = Member(attributes['name'])
     m.set_telephone = attributes['telephone']
     m.set_group_id = attributes['group_id']
+    db_session.add(m)
+    db_session.commit()
+
+    return m
+
+def list_meetings(group_id):
+    meetings = []
+    for m in Meeting.query.filter(Meeting.group_id == group_id).all():
+        attributes = m.__dict__
+        del attributes['_sa_instance_state']
+        attributes['date'] = datetime.strftime(attributes['date'], '%d/%m/%Y')
+        meetings.append(attributes)
+    return meetings
+
+def create_meeting(attributes):
+    date = datetime.strptime(attributes['date'], '%d/%m/%Y')
+    m = Meeting(attributes['group_id'], date, attributes['number_of_participants'])
     db_session.add(m)
     db_session.commit()
 
