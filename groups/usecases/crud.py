@@ -6,7 +6,7 @@ from groups.domains.meeting import Meeting
 
 def list_groups():
     groups = []
-    for g in Group.query.all():
+    for g in Group.query.order_by(Group.name):
         attributes = g.__dict__
         del attributes['_sa_instance_state']
         groups.append(attributes)
@@ -55,6 +55,8 @@ def list_meetings(group_id):
 def create_meeting(attributes):
     date = datetime.strptime(attributes['date'], '%d/%m/%Y')
     m = Meeting(attributes['group_id'], date, attributes['number_of_participants'])
+    m.set_number_of_children(attributes['number_of_children'])
+    m.set_number_of_visitors(attributes['number_of_visitors'])
     db_session.add(m)
     db_session.commit()
 

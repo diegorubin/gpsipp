@@ -19,7 +19,7 @@ def create_user():
     try:
         attributes = request.get_json()
         crud.create_user(attributes)
-        return Response(attributes, mimetype='application/json', status=201)
+        return Response(json.dumps(attributes), mimetype='application/json', status=201)
     except ContractError as e:
         result = {
             'message': str(e),

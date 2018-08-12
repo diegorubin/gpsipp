@@ -4,7 +4,7 @@ from users.usecases.exceptions import *
 
 def list_users():
     users = []
-    for u in User.query.all():
+    for u in User.query.order_by(User.name):
         attributes = u.__dict__
         del attributes['_sa_instance_state']
         del attributes['password']

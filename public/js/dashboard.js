@@ -35,6 +35,8 @@ Dashboard.prototype.initMeetingSubmit = function() {
     var meeting = {
       date: document.getElementById('inputDate').value,
       number_of_participants: document.getElementById('inputNumberOfParticipants').value,
+      number_of_children: document.getElementById('inputNumberOfChildren').value,
+      number_of_visitors: document.getElementById('inputNumberOfVisitors').value,
       group_id: document.getElementById('inputGroupId').value
     };
 
