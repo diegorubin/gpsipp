@@ -15,7 +15,7 @@ def meetings():
     if request.method == 'POST':
         return create_meeting()
 
-@mod.route('/meetings/<id>', methods=['GET', 'UPDATE'])
+@mod.route('/meetings/<id>', methods=['GET', 'UPDATE', 'DELETE'])
 @jwt_required()
 def meeting(id):
     if request.method == 'GET':
@@ -23,6 +23,9 @@ def meeting(id):
 
     if request.method == 'UPDATE':
         return update_meeting(id)
+
+    if request.method == 'DELETE':
+        return delete_meeting(id)
 
 def get_meetings(group_id):
     result = json.dumps(crud.list_meetings(group_id))
@@ -41,4 +44,8 @@ def update_meeting(id):
     attributes = request.get_json()
     result = json.dumps(crud.update_meeting(id, attributes))
     return Response(result, mimetype='application/json', status=200)
+
+def delete_meeting(id):
+    crud.delete_meeting(id)
+    return Response(json.dumps({}), mimetype='application/json', status=204)
 

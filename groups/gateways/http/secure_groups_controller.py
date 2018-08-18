@@ -28,5 +28,5 @@ def get_groups():
 def create_group():
     attributes = request.get_json()
     crud.create_group(attributes)
-    return Response(attributes, mimetype='application/json', status=201)
+    return Response(json.dumps(attributes), mimetype='application/json', status=201)
 

@@ -32,10 +32,20 @@ Group.prototype.initButtons = function() {
     _this.showGroup(id);
 
   });
+  $('.deleteMeeting').click(function(event){
+    event.preventDefault();
+    event.stopPropagation();
+
+    var id = event.target.getAttribute('data-id');
+    _this.deleteMeeting(id);
+
+  });
 };
 
 Group.prototype.showGroup = function(groupId) {
   var _this = this;
+  _this.groupId = groupId;
+
   $.ajax({
     method: 'get', 
     url: '/secure/groups/' + groupId,
@@ -84,6 +94,25 @@ Group.prototype.listMeetings = function(groupId) {
   });
 };
 
+Group.prototype.deleteMeeting = function(meetingId) {
+  var _this = this;
+  $.ajax({
+    method: 'delete', 
+    url: '/secure/meetings/' + meetingId,
+    dataType: 'json',
+    contentType: 'application/json',
+    headers: {
+      'Authorization': 'JWT ' + localStorage.getItem('access_token')
+    }
+  }).done(function(group) {
+    _this.showGroup(_this.groupId);
+  }).fail(function(data) {
+    console.log(data);
+    if (data.status == 401) {
+      _this.application.clearSession();
+    }
+  });
+};
 Group.prototype.initFormSubmit = function() {
   var _this = this;
   $('.form-group').submit(function(event) {

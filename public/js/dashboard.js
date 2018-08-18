@@ -53,7 +53,10 @@ Dashboard.prototype.initMeetingSubmit = function() {
       var group = new Group();
       group.init(_this.application, meeting.group_id);
     }).fail(function(data){
-      _this.renderError(data.error);
+      console.log(data);
+      if (data.status) {
+        _this.renderError(data.error);
+      }
     });
 
     return false;

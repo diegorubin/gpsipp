@@ -9,6 +9,12 @@ def list_groups():
     for g in Group.query.order_by(Group.name):
         attributes = g.__dict__
         del attributes['_sa_instance_state']
+        meetings = Meeting.query.filter(Meeting.group_id == g.id).order_by(Meeting.date).all()
+        if len(meetings) > 0:
+            date = meetings[-1].date
+            attributes['last_meeting_date'] = datetime.strftime(date, '%d/%m/%Y')
+        else:
+            attributes['last_meeting_date'] = ''
         groups.append(attributes)
     return groups
 
@@ -61,4 +67,9 @@ def create_meeting(attributes):
     db_session.commit()
 
     return m
+
+def delete_meeting(meeting_id):
+    meeting = Meeting.query.filter(Meeting.id == meeting_id).first()
+    db_session.delete(meeting)
+    db_session.commit()
 

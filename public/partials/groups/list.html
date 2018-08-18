@@ -10,7 +10,7 @@
     <tr>
       <th>Nome</th>
       <th>Dia da Semana</th>
-      <th>Endereço</th>
+      <th>Último Encontro Registrado</th>
       <th></th>
     </tr>
   </thead>
@@ -19,7 +19,8 @@
       <tr>
         <td><a href="#" class="groupLink" data-id="{{= group.id}}">{{= group.name }}</a></td>
         <td>{{= group.day_of_week }}</td>
-        <td>{{= group.address }}</td>
+        <td>{{= group.last_meeting_date}}</td>
+        <td></td>
       </tr>
     {{~}}
   </tbody>
