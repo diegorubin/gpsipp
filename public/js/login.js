@@ -24,7 +24,7 @@ Login.prototype.login = function(credentials) {
   }).done(function(response){
     _this.createSession(response.access_token);
   }).fail(function(data){
-    _this.renderError(data.error);
+    $.notify({message: "Usuário ou senha inválidos!"}, {type: "danger"});
   });
 };
 
