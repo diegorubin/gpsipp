@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">Relatórios</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+  </div>
+</div>
+
+<h3>
+  Presença de partipantes ativos
+</h3>
+
+<table id="number_of_partipants" class="table">
+  <thead>
+    <tr>
+      <th>Nome do grupo</th>
+      {{~ it.result.weeks :week}}
+        <th> {{= week}} </th>
+      {{~}}
+    </tr>
+  </thead>
+  <tbody>
+    {{~ it.result.groups :group}}
+      <tr>
+        <td>{{= group.name}}</td>
+        {{~ it.result.weeks :week}}
+          <td> {{= (it.result.meetings[group.id][week] || {}).number_of_participants || 0 }} </td>
+        {{~}}
+      </tr>
+    {{~}}
+  </tbody>
+</table>
+
