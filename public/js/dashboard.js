@@ -121,5 +121,13 @@ Dashboard.prototype.initMenu = function() {
     var user = new User();
     user.init(_this.application);
   });
+
+  $('#reportMenuItem').click(function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    var report = new Report();
+    report.init(_this.application);
+  });
 };
 

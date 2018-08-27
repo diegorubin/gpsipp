@@ -26,6 +26,7 @@ app.config.update(dict(
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 from groups.gateways.http import secure_groups_controller, secure_members_controller, secure_meetings_controller
+from reports.gateways.http import secure_reports_controller
 from users.gateways.http import users_controller, secure_users_controller
 from users.usecases.login import authenticate, identity
 
@@ -36,6 +37,7 @@ app.register_blueprint(secure_users_controller.mod, url_prefix='/secure')
 app.register_blueprint(secure_groups_controller.mod, url_prefix='/secure')
 app.register_blueprint(secure_members_controller.mod, url_prefix='/secure')
 app.register_blueprint(secure_meetings_controller.mod, url_prefix='/secure')
+app.register_blueprint(secure_reports_controller.mod, url_prefix='/secure')
 
 @app.route('/')
 def root():
