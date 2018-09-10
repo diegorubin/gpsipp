@@ -8,7 +8,7 @@ def prepare(start, end):
         'meetings': {}
     }
 
-    for group in Group.query.all():
+    for group in Group.query.order_by(Group.name).all():
         result['groups'].append({
             'name': group.name,
             'id': group.id

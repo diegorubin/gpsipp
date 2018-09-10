@@ -1,23 +1,26 @@
-<h3>Encontros</h3>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">Participantes</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <a href="#" id="newMember" class="btn btn-primary">Novo Participante</a>
+  </div>
+</div>
 
-<table id="encontros" class="table">
+<table id="members" class="table">
   <thead>
     <tr>
-      <th>Data</th>
-      <th>Número de Participantes Ativos</th>
-      <th>Número de Visitantes</th>
-      <th>Número de Crianças</th>
+      <th>Nome</th>
+      <th>Grupo</th>
+      <th>Telefone</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    {{~ it.meetings :meeting}}
+    {{~ it.members :member}}
       <tr>
-        <td>{{= meeting.date}}</td>
-        <td>{{= meeting.number_of_participants}}</td>
-        <td>{{= meeting.number_of_visitors}}</td>
-        <td>{{= meeting.number_of_children}}</td>
-        <td><a href="#" class="deleteMeeting" data-id="{{= meeting.id}}">excluir</a></td>
+        <td>{{= member.name}}</td>
+        <td>{{= member.group_name}}</td>
+        <td>{{= member.telephone}}</td>
+        <td></td>
       </tr>
     {{~}}
   </tbody>

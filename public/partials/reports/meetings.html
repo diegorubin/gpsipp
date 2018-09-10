@@ -29,3 +29,53 @@
   </tbody>
 </table>
 
+<h3>
+  Presença de visitantes
+</h3>
+
+<table id="number_of_visitors" class="table">
+  <thead>
+    <tr>
+      <th>Nome do grupo</th>
+      {{~ it.result.weeks :week}}
+        <th> {{= week}} </th>
+      {{~}}
+    </tr>
+  </thead>
+  <tbody>
+    {{~ it.result.groups :group}}
+      <tr>
+        <td>{{= group.name}}</td>
+        {{~ it.result.weeks :week}}
+          <td> {{= (it.result.meetings[group.id][week] || {}).number_of_visitors || 0 }} </td>
+        {{~}}
+      </tr>
+    {{~}}
+  </tbody>
+</table>
+
+<h3>
+  Presença de crianças
+</h3>
+
+<table id="number_of_children" class="table">
+  <thead>
+    <tr>
+      <th>Nome do grupo</th>
+      {{~ it.result.weeks :week}}
+        <th> {{= week}} </th>
+      {{~}}
+    </tr>
+  </thead>
+  <tbody>
+    {{~ it.result.groups :group}}
+      <tr>
+        <td>{{= group.name}}</td>
+        {{~ it.result.weeks :week}}
+          <td> {{= (it.result.meetings[group.id][week] || {}).number_of_children || 0 }} </td>
+        {{~}}
+      </tr>
+    {{~}}
+  </tbody>
+</table>
+
